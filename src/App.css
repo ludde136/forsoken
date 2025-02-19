@@ -1,0 +1,128 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+/* Kalender-spesifikke stiler */
+.booked {
+  background-color: #ff4d4d !important;
+  color: black;
+}
+
+.booked-both-sides {
+  background-color: #ff4d4d !important;
+  color: black;
+}
+
+.booked-boundary-reverse {
+  background: linear-gradient(to left, lightblue 50%, #ff4d4d 50%) !important;
+  color: black;
+}
+
+.booked-boundary {
+  background: linear-gradient(to left, #ff4d4d 50%, lightblue 50%) !important;
+  color: black;
+}
+
+.booked-start-only {
+  background: linear-gradient(to left, #ff4d4d 50%, transparent 50%) !important;
+  color: black;
+}
+
+.booked-end-only {
+  background: linear-gradient(to left, transparent 50%, #ff4d4d 50%) !important;
+  color: black;
+}
+
+.selected {
+  background-color: lightblue !important;
+  color: black;
+}
+
+.selected-start {
+  background: linear-gradient(
+    to right,
+    transparent 50%,
+    lightblue 50%
+  ) !important;
+  color: black;
+}
+
+.selected-end {
+  background: linear-gradient(
+    to left,
+    transparent 50%,
+    lightblue 50%
+  ) !important;
+  color: black;
+}
+
+.invalid-date {
+  background-color: gray !important;
+  color: white;
+}
+
+button {
+  margin-top: 10px;
+}
+
+.hoverable:hover {
+  background-color: lightblue !important;
+}
+
+/* Kalender-styling */
+.calendar-container {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar-price {
+  display: block;
+  font-size: 0.6rem !important;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.booking-dates {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.booking-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+/* Legg til ny styling for datoene */
+.react-calendar__tile abbr {
+  font-size: 0.8rem !important;
+  font-weight: normal !important;
+}
+
+/* Juster høyden på datoboksene */
+.react-calendar__tile {
+  height: 52px !important;
+  padding: 2px !important;
+}
+
+/* Juster avstanden mellom dato og pris */
+.react-calendar__tile > * {
+  margin: 1px 0 !important;
+}

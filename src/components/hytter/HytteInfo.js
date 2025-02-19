@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Ikkefunnet from "../ikkefunnet";
 import text from "../Text.json";
 import Calender from "./Calender";
-import { IconButton, Grid, Typography, Box, Divider } from "@mui/material";
+import { IconButton, Typography, Box, Divider } from "@mui/material";
 import {
   ArrowBackIos,
   ArrowForwardIos,

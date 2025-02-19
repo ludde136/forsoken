@@ -49,7 +49,7 @@ const calculateTotalPrice = (start, end) => {
 };
 
 const CalendarComponent = () => {
-  const [date, setDate] = useState(new Date());
+  const [date] = useState(new Date());
   const [bookedDates, setBookedDates] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -208,11 +208,10 @@ const CalendarComponent = () => {
     }
 
     if (!startDate) {
-      // For startdato: Tillat booking hvis datoen er slutten på en eksisterende booking
       const isStartOfBooking = bookedDates.some(
         (booking) =>
           booking.start.toDateString() === selectedDate.toDateString() &&
-          booking.start.toDateString() !== booking.end.toDateString() // Ikke tillat hvis det er en enkeltdags-booking
+          booking.start.toDateString() !== booking.end.toDateString()
       );
 
       if (isStartOfBooking) {
@@ -221,17 +220,9 @@ const CalendarComponent = () => {
       }
 
       setStartDate(selectedDate);
-      setTotalPrice(0); // Nullstill pris når ny startdato velges
+      setTotalPrice(0);
     } else if (!endDate) {
       if (selectedDate > startDate) {
-        // For sluttdato: Tillat booking hvis datoen er starten på en eksisterende booking
-        const isEndOfBooking = bookedDates.some(
-          (booking) =>
-            booking.end.toDateString() === selectedDate.toDateString() &&
-            booking.start.toDateString() !== booking.end.toDateString() // Ikke tillat hvis det er en enkeltdags-booking
-        );
-
-        // Sjekk om det er bookinger mellom datoene
         if (hasBookedDatesBetween(startDate, selectedDate)) {
           alert(
             "Du kan ikke velge en periode som overlapper med eksisterende bookinger"
@@ -239,11 +230,10 @@ const CalendarComponent = () => {
           return;
         }
 
-        // Tillat booking hvis det ikke er bookinger imellom
         setEndDate(selectedDate);
         const price = calculateTotalPrice(startDate, selectedDate);
         setTotalPrice(price);
-        setOpenDialog(true); // Åpne dialog når datoer er valgt
+        setOpenDialog(true);
       } else {
         setStartDate(selectedDate);
         setTotalPrice(0);

@@ -50,7 +50,7 @@ function Vishytter() {
               }}
             >
               <CardHeader
-                title={item.navn1}
+                title={item.navn1.charAt(0).toUpperCase() + item.navn1.slice(1)}
                 subheader={<Link to={item.navn1}>Les mer og reservere</Link>}
               />
               <CardMedia

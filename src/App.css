@@ -126,3 +126,95 @@ button {
 .react-calendar__tile > * {
   margin: 1px 0 !important;
 }
+
+/* Modal styles */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.modal-close-button {
+  position: absolute;
+  right: -20px;
+  top: -20px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-close-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-navigation {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+}
+
+.modal-nav-button {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-image {
+  max-width: 80vw;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+.navigation-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: transparent;
+}
+
+.navigation-overlay:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.navigation-overlay.left {
+  left: 0;
+  justify-content: flex-start;
+}
+
+.navigation-overlay.right {
+  right: 0;
+  justify-content: flex-end;
+}
+
+/* Footer styles */
+.footer-icon {
+  width: 48px; /* Beholder dobbel bredde */
+  height: 24px; /* Reduserer høyden til å matche Instagram-ikonet */
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.instagram-icon {
+  font-size: 24px; /* Setter standard størrelse */
+}

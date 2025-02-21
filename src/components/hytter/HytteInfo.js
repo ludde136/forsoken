@@ -3,16 +3,18 @@ import { useParams } from "react-router-dom";
 import Ikkefunnet from "../ikkefunnet";
 import text from "../Text.json";
 import Calender from "./Calender";
-import { IconButton, Typography, Box, Divider } from "@mui/material";
+import { IconButton, Typography, Box, Divider, Modal } from "@mui/material";
 import {
   ArrowBackIos,
   ArrowForwardIos,
   CheckCircleOutline,
+  Close,
 } from "@mui/icons-material";
 import { useState } from "react";
 
 function HytteInfo() {
   const [index, setIndex] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
   const { sted } = useParams();
 
   // Finn riktig hytte fra text.json
@@ -69,7 +71,13 @@ function HytteInfo() {
               <img
                 src={images[index]}
                 alt="Slide"
-                style={{ width: 300, height: 200, objectFit: "cover" }}
+                style={{
+                  width: 300,
+                  height: 200,
+                  objectFit: "cover",
+                  cursor: "pointer",
+                }}
+                onClick={() => setOpenModal(true)}
               />
               <IconButton onClick={handleNext}>
                 <ArrowForwardIos />
@@ -78,6 +86,51 @@ function HytteInfo() {
             <Calender sted={sted} />
           </div>
         </Box>
+
+        {/* Modal for fullskjerm bildevisning */}
+        <Modal
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          className="modal-container"
+        >
+          <div className="modal-content">
+            <IconButton
+              onClick={() => setOpenModal(false)}
+              className="modal-close-button"
+            >
+              <Close />
+            </IconButton>
+            <div className="modal-navigation">
+              <img
+                src={images[index]}
+                alt="Fullscreen"
+                className="modal-image"
+              />
+              <div
+                className="navigation-overlay left"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrev();
+                }}
+              >
+                <IconButton className="modal-nav-button">
+                  <ArrowBackIos />
+                </IconButton>
+              </div>
+              <div
+                className="navigation-overlay right"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+              >
+                <IconButton className="modal-nav-button">
+                  <ArrowForwardIos />
+                </IconButton>
+              </div>
+            </div>
+          </div>
+        </Modal>
 
         {/* Høyre kolonne */}
         <Box>

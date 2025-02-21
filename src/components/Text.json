@@ -2,7 +2,23 @@
   {
     "id": "1",
     "navn1": "trulsrudkollen",
-    "images": ["/truls/Truls_Bilde1.jpg", "/truls/Truls_Bilde3.jpg"],
+    "images": [
+      "/truls/Truls_Bilde1.jpg",
+      "/truls/Truls_Bilde2.jpg",
+      "/truls/Truls_Bilde3.jpg",
+      "/truls/Truls_Bilde4.jpg",
+      "/truls/Truls_Bilde5.jpg",
+      "/truls/Truls_Bilde6.jpg",
+      "/truls/Truls_Bilde7.jpg",
+      "/truls/Truls_Bilde8.jpg",
+      "/truls/Truls_Bilde9.jpg",
+      "/truls/Truls_Bilde10.jpg",
+      "/truls/Truls_Bilde11.jpg",
+      "/truls/Truls_Bilde12.jpg",
+      "/truls/Truls_Bilde13.jpg",
+      "/truls/Truls_Bilde14.jpg",
+      "/truls/Truls_Bilde15.jpg"
+    ],
     "title": "En perle av en markahytte i Lommedalen med panoramautsikt til Oslofjorden! Anneks kan også leies.",
     "description": "Ekte markahytte på Trulsrudkollen i Bærum, med fineste utsikt til Oslofjorden! Supert turmål for aktive friluftsfolk. Til fots, på sykkel eller med ski/truger. Flere enn 4? Lei annekset i tillegg.",
     "size": "Senger til 8 personer",
@@ -56,7 +72,7 @@
     "Adkomst vinter": "Det går fine skiløyper fra Lommedalen skole, fra toppen av Krydsbybakken og fra Eineåsen skianlegg. Sjekk med skiforeningens hjemmesider om løypene er oppkjørte. På de siste hundre meterne er det best med truger eller med ski (gjerne brede), støvler med gamasjer og staver med gode trinser gjennom skogen. Stedvis må man klyve. Ved lite snø kan en gå til fots med gode støvler.",
     "Hovedregelen": "Hovedregelen er at du skal forlate hytta i den stand du selv ønsker å finne den, og gjerne litt bedre enn da du kom, se avsnittet Hytte-/Avbestillingsregler.",
     "Hytteregler": "Hytta leies ut til voksne, ansvarsbevisste ordensmennesker over 25 år. Hytta kan kun brukes til friluftsliv. Det er ikke anledning til å ha fest på hytta. Bestilleren er ansvarlig for at regler overholdes og at hytta og dens inventar behandles på beste måte. Eventuelle skader meldes straks til hytteeier. Leietaker kan bli erstatningsansvarlig for skader som forårsakes av reisefølge/besøkende, inklusiv dyr. Røyking i hytta er ikke tillatt. Hytta skal forlates ryddig og rengjort og alt av søppel, tomflasker og aviser må tas med. Vær vennlig å ikke sett igjen noe som helst av medbrakt mat, heller ikke tørrmat eller drikke. Urinering kun på utedo eller ved siden av utedoen mot uthusets bakside. Dette av hensyn til trivsel og bruk av snø til smeltevann.",
-    "Avbestillingsregler": "Oppholdet betales på inatur.no ved bestilling. Ved avbestilling inntil 30 dager før oppholdet starter refunderes 85 % av beløpet. Ved avbestilling mellom 30 - 7 dager før oppholdet starter refunderes 50 % av beløpet. Ved avbestilling én uke eller mindre før oppholdet starter gis ingen refusjon. Vi anbefaler alle leietakere å ha sin reise-/avbestillingsforsikring i orden. Avbestilling/endring i leieforholdet rettes til eier av hytta.",
+    "Avbestillingsregler": "Oppholdet betales over vipps ved bestilling. Ved avbestilling inntil 30 dager før oppholdet starter refunderes 85 % av beløpet. Ved avbestilling mellom 30 - 7 dager før oppholdet starter refunderes 50 % av beløpet. Ved avbestilling én uke eller mindre før oppholdet starter gis ingen refusjon. Vi anbefaler alle leietakere å ha sin reise-/avbestillingsforsikring i orden. Avbestilling/endring i leieforholdet rettes til eier av hytta.",
     "Nøkkelhenting": "Hytta er låst, nøkkel i kodeboks. Koden får du oppgitt før ankomst. Dersom du ikke har hørt fra oss før leieforholdet tar til, ta kontakt på mobil senest før du reiser hjemmefra.",
     "Turtips": "Slik kommer du deg dit - turmulighetene",
     "Korteste vei": "Parker ved krysset Haugsåsen / Øvre Goslia. Parker godt inn i grøftekanten et stykke fra selve krysset! Google maps gir presis veibeskrivelse til parkering med bil ved søk på Øvre Goslia. Passer bommen og følg Haugsåsen (bratt grusvei) opp til krysset 'Haugsåsen'. Ta av til høyre mot Lommedalen skole langs Bjerkeveien. Etter ca 300 meter (ved veiens høyeste punkt) tar du av til høyre og følger merket sti opp til hytta (adresse Trulsrudkollen 2 – bruk gulesiders kart)."

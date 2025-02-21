@@ -31,26 +31,10 @@ const isWeekend = (date) => {
   return day === 5 || day === 6; // 5 er fredag, 6 er lørdag
 };
 
-const calculateTotalPrice = (start, end) => {
-  if (!start || !end) return 0;
-
-  let totalPrice = 0;
-  const currentDate = new Date(start);
-  const endDate = new Date(end);
-
-  // Gå gjennom hver dag i perioden, men ikke inkluder sluttdatoen
-  while (currentDate < endDate) {
-    // Endret fra <= til <
-    totalPrice += isWeekend(currentDate) ? WEEKEND_PRICE : WEEKDAY_PRICE;
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  return totalPrice;
-};
-
 const CalendarComponent = () => {
   const [date] = useState(new Date());
   const [bookedDates, setBookedDates] = useState([]);
+  const [priceChanges, setPriceChanges] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -84,28 +68,26 @@ const CalendarComponent = () => {
     const fetchBookings = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "bookings"));
-        const allBookings = querySnapshot.docs
-          .map((doc) => {
-            const data = doc.data();
-            // Sjekk om vi har en fullstendig booking eller bare sperrede datoer
-            if (data.start && data.end) {
-              return {
-                ...data,
-                start: new Date(data.start),
-                end: new Date(data.end),
-                // Hvis booking mangler status, behandle den som sperret
-                status: data.status || "booked",
-              };
-            }
-            return null;
-          })
-          .filter(Boolean); // Fjerner eventuelle null-verdier
+        const allBookings = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            ...data,
+            start: new Date(data.start),
+            end: new Date(data.end),
+            status: data.status || "booked",
+            isPriceChange: data.isPriceChange || false,
+            totalPrice: data.totalPrice,
+          };
+        });
 
-        // Filtrer ut bookinger som enten er bekreftet eller mangler brukerinfo
-        const confirmedBookings = allBookings.filter(
-          (booking) => booking.status === "booked"
+        // Separer bookinger og prisendringer
+        const bookings = allBookings.filter(
+          (booking) => !booking.isPriceChange && booking.status === "booked"
         );
-        setBookedDates(confirmedBookings);
+        const prices = allBookings.filter((booking) => booking.isPriceChange);
+
+        setBookedDates(bookings);
+        setPriceChanges(prices);
       } catch (error) {
         console.error("Feil ved henting av bookinger:", error);
       }
@@ -146,7 +128,7 @@ const CalendarComponent = () => {
       setExtras({ annex: false, firewood: false });
       setOpenDialog(false);
       setConfirmedAmount(finalPrice);
-      setShowPaymentDialog(true); // Vis betalingsdialog i stedet for alert
+      setShowPaymentDialog(true);
     }
   };
 
@@ -245,12 +227,43 @@ const CalendarComponent = () => {
     }
   };
 
+  const getDatePrice = (date) => {
+    // Sjekk om datoen har en prisendring
+    const priceChange = priceChanges.find((change) => {
+      const changeStart = new Date(change.start);
+      const changeEnd = new Date(change.end);
+      return date >= changeStart && date <= changeEnd;
+    });
+
+    if (priceChange) {
+      return parseInt(priceChange.totalPrice);
+    }
+
+    // Hvis ingen prisendring, bruk standard priser
+    return isWeekend(date) ? WEEKEND_PRICE : WEEKDAY_PRICE;
+  };
+
+  const calculateTotalPrice = (start, end) => {
+    if (!start || !end) return 0;
+
+    let totalPrice = 0;
+    const currentDate = new Date(start);
+    const endDate = new Date(end);
+
+    while (currentDate < endDate) {
+      totalPrice += getDatePrice(currentDate);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return totalPrice;
+  };
+
   const tileContent = ({ date }) => {
     if (isBeforeToday(date) || isAfterOneYear(date)) {
       return null;
     }
 
-    const price = isWeekend(date) ? WEEKEND_PRICE : WEEKDAY_PRICE;
+    const price = getDatePrice(date);
     return <Typography className="calendar-price">{price}kr</Typography>;
   };
 
@@ -320,8 +333,10 @@ const CalendarComponent = () => {
   };
 
   const getTotalPrice = () => {
+    if (!startDate || !endDate) return 0;
+
     const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-    let total = totalPrice;
+    let total = calculateTotalPrice(startDate, endDate);
 
     if (extras.annex) {
       total += ANNEX_PRICE * days;
@@ -342,6 +357,10 @@ const CalendarComponent = () => {
           value={date}
           tileContent={tileContent}
           tileClassName={tileClassName}
+          view="month"
+          onDrillUp={() => null}
+          onClickMonth={() => null}
+          onClickYear={() => null}
         />
       </div>
       {startDate && (
@@ -370,8 +389,14 @@ const CalendarComponent = () => {
                 Total pris: {getTotalPrice()} kr
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                Hverdager: {WEEKDAY_PRICE} kr/døgn • Helg: {WEEKEND_PRICE}{" "}
-                kr/døgn
+                Ordinære priser: Hverdager {WEEKDAY_PRICE} kr/døgn • Helg{" "}
+                {WEEKEND_PRICE} kr/døgn
+                {priceChanges.length > 0 && (
+                  <>
+                    <br />
+                    Prisene kan avvike i perioder med høy etterspørsel
+                  </>
+                )}
               </Typography>
             </>
           )}

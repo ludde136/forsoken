@@ -1,55 +1,39 @@
 import React from "react";
-import { Breadcrumbs } from "@mui/material";
+import { AppBar, Toolbar, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
 
 function Header() {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        marginBottom: "4vh",
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: "white",
+        boxShadow: 1,
       }}
     >
-      <Breadcrumbs aria-label="breadcrumb" style={{ margin: "auto" }}>
-        <Link
+      <Toolbar>
+        <Button
+          component={Link}
           to="/"
-          style={{
-            textDecoration: "none",
-            color: "inherit",
-            cursor: "pointer",
-          }}
-          onMouseOver={(e) => {
-            e.target.style.textDecoration = "underline";
-            e.target.style.color = "black";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.textDecoration = "none";
-            e.target.style.color = "inherit";
+          startIcon={<HomeIcon />}
+          variant="contained"
+          sx={{
+            margin: "auto",
+            backgroundColor: "#2e7d32", // MUI's green[800]
+            "&:hover": {
+              backgroundColor: "#1b5e20", // MUI's green[900]
+            },
+            textTransform: "none", // Fjerner store bokstaver
+            borderRadius: 2,
+            px: 3, // Padding på sidene
+            py: 1, // Padding topp og bunn
           }}
         >
           Hjem
-        </Link>
-        <Link
-          to="/se-alle-hytter"
-          style={{
-            textDecoration: "none",
-            color: "inherit",
-            cursor: "pointer",
-          }}
-          onMouseOver={(e) => {
-            e.target.style.textDecoration = "underline";
-            e.target.style.color = "black";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.textDecoration = "none";
-            e.target.style.color = "inherit";
-          }}
-        >
-          Vis Hytter
-        </Link>
-      </Breadcrumbs>
-    </div>
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
 }
 

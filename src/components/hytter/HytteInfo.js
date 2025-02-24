@@ -359,78 +359,45 @@ function HytteInfo() {
       </Typography>
       {/* Hytteregler-seksjon */}
       <Divider sx={{ my: 4 }} />
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Hytteregler
-      </Typography>
-      <Box sx={{ pl: 2 }}>
-        {hytte.Hytteregler.split(". ").map((rule, index) => (
-          <Box
-            key={index}
-            sx={{ display: "flex", alignItems: "flex-start", mb: 1 }}
-          >
-            <CheckCircleOutline
-              sx={{ mr: 1, color: "success.main", fontSize: 20 }}
-            />
-            <Typography variant="body1">{rule.trim()}.</Typography>
-          </Box>
-        ))}
+      <Box sx={{ pl: 0 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Hytteregler
+        </Typography>
+        <Box>
+          {hytte.Hytteregler.split(". ").map((rule, index) => (
+            <Box
+              key={index}
+              sx={{ display: "flex", alignItems: "flex-start", mb: 1 }}
+            >
+              <CheckCircleOutline
+                sx={{ mr: 1, color: "success.main", fontSize: 20 }}
+              />
+              <Typography variant="body1">{rule.trim()}.</Typography>
+            </Box>
+          ))}
+        </Box>
       </Box>
 
       {/* Avbestillingsregler-seksjon */}
       <Divider sx={{ my: 4 }} />
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Avbestillingsregler
-      </Typography>
-      <Box sx={{ pl: 2 }}>
-        {hytte.Avbestillingsregler.split(". ").map((rule, index) => (
-          <Box
-            key={index}
-            sx={{ display: "flex", alignItems: "flex-start", mb: 1 }}
-          >
-            <CheckCircleOutline
-              sx={{ mr: 1, color: "success.main", fontSize: 20 }}
-            />
-            <Typography variant="body1">{rule.trim()}.</Typography>
-          </Box>
-        ))}
+      <Box sx={{ pl: 0 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Avbestillingsregler
+        </Typography>
+        <Box>
+          {hytte.Avbestillingsregler.split(". ").map((rule, index) => (
+            <Box
+              key={index}
+              sx={{ display: "flex", alignItems: "flex-start", mb: 1 }}
+            >
+              <CheckCircleOutline
+                sx={{ mr: 1, color: "success.main", fontSize: 20 }}
+              />
+              <Typography variant="body1">{rule.trim()}.</Typography>
+            </Box>
+          ))}
+        </Box>
       </Box>
-
-      {/* Turtips-seksjon */}
-      <Divider sx={{ my: 4 }} />
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Turtips og adkomst
-      </Typography>
-      <Box sx={{ pl: 2 }}>
-        <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: "bold" }}>
-          Korteste vei:
-        </Typography>
-        <Typography variant="body1" paragraph>
-          {hytte["Korteste vei"]}
-        </Typography>
-
-        <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: "bold" }}>
-          Adkomst sommer:
-        </Typography>
-        <Typography variant="body1" paragraph>
-          {hytte["Adkomst sommer"]}
-        </Typography>
-
-        <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: "bold" }}>
-          Adkomst vinter:
-        </Typography>
-        <Typography variant="body1" paragraph>
-          {hytte["Adkomst vinter"]}
-        </Typography>
-      </Box>
-
-      {/* Historie-seksjon */}
-      <Divider sx={{ my: 4 }} />
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Historien
-      </Typography>
-      <Typography variant="body1" paragraph>
-        {hytte["Historien"]}
-      </Typography>
 
       {/* Anneks-seksjon */}
       <Divider sx={{ my: 4 }} />
@@ -468,13 +435,43 @@ function HytteInfo() {
         {hytte["Nøkkelhenting"]}
       </Typography>
 
-      {/* Hovedregelen-seksjon */}
+      {/* Turtips-seksjon */}
+      <Divider sx={{ my: 4 }} />
+      <Box sx={{ pl: 0 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Turtips og adkomst
+        </Typography>
+        <Box>
+          <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: "bold" }}>
+            Korteste vei:
+          </Typography>
+          <Typography variant="body1" paragraph>
+            {hytte["Korteste vei"]}
+          </Typography>
+
+          <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: "bold" }}>
+            Adkomst sommer:
+          </Typography>
+          <Typography variant="body1" paragraph>
+            {hytte["Adkomst sommer"]}
+          </Typography>
+
+          <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: "bold" }}>
+            Adkomst vinter:
+          </Typography>
+          <Typography variant="body1" paragraph>
+            {hytte["Adkomst vinter"]}
+          </Typography>
+        </Box>
+      </Box>
+
+      {/* Historie-seksjon */}
       <Divider sx={{ my: 4 }} />
       <Typography variant="h6" sx={{ mb: 2 }}>
-        Hovedregelen
+        Historien
       </Typography>
       <Typography variant="body1" paragraph>
-        {hytte["Hovedregelen"]}
+        {hytte["Historien"]}
       </Typography>
     </Box>
   );

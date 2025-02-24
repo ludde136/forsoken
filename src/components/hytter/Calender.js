@@ -20,11 +20,46 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { Person, Phone, Email, Cake } from "@mui/icons-material";
+import * as yup from "yup";
 
 const WEEKDAY_PRICE = 900;
 const WEEKEND_PRICE = 1500;
 const ANNEX_PRICE = 400;
 const FIREWOOD_PRICE = 100;
+
+const validationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .matches(
+      /^[A-Za-zÆØÅæøå]+ [A-Za-zÆØÅæøå]+/,
+      "Vennligst skriv inn både for- og etternavn"
+    )
+    .required("Navn er påkrevd"),
+
+  phone: yup
+    .string()
+    .matches(
+      /^[0-9]{8}$/,
+      "Vennligst skriv inn et gyldig 8-sifret telefonnummer"
+    )
+    .required("Telefonnummer er påkrevd"),
+
+  email: yup
+    .string()
+    .email("Vennligst skriv inn en gyldig e-postadresse")
+    .required("E-post er påkrevd"),
+
+  birthYear: yup
+    .number()
+    .transform((value) => (isNaN(value) ? undefined : Number(value)))
+    .test("age", "Du må være minst 25 år for å leie hytta", (value) => {
+      if (!value) return false;
+      const currentYear = new Date().getFullYear();
+      const age = currentYear - value;
+      return age >= 25;
+    })
+    .required("Fødselsår er påkrevd"),
+});
 
 const isWeekend = (date) => {
   const day = date.getDay();
@@ -96,39 +131,38 @@ const CalendarComponent = () => {
   }, []);
 
   const handleBookingRequest = async () => {
-    if (
-      !userInfo.name ||
-      !userInfo.phone ||
-      !userInfo.email ||
-      !userInfo.birthYear
-    ) {
-      setErrors({
-        name: !userInfo.name,
-        phone: !userInfo.phone,
-        email: !userInfo.email,
-        birthYear: !userInfo.birthYear,
-      });
-      return;
-    }
+    try {
+      await validationSchema.validate(userInfo, { abortEarly: false });
 
-    if (startDate && endDate) {
-      const finalPrice = getTotalPrice();
-      const newBooking = {
-        ...userInfo,
-        start: startDate.toDateString(),
-        end: endDate.toDateString(),
-        totalPrice: finalPrice,
-        status: "pending",
-      };
+      // Hvis validering er vellykket, fortsett med booking
+      if (startDate && endDate) {
+        const finalPrice = getTotalPrice();
+        const newBooking = {
+          ...userInfo,
+          start: startDate.toDateString(),
+          end: endDate.toDateString(),
+          totalPrice: finalPrice,
+          status: "pending",
+        };
 
-      await addDoc(collection(db, "bookings"), newBooking);
-      setStartDate(null);
-      setEndDate(null);
-      setUserInfo({ name: "", phone: "", email: "", birthYear: "" });
-      setExtras({ annex: false, firewood: false });
-      setOpenDialog(false);
-      setConfirmedAmount(finalPrice);
-      setShowPaymentDialog(true);
+        await addDoc(collection(db, "bookings"), newBooking);
+        setStartDate(null);
+        setEndDate(null);
+        setUserInfo({ name: "", phone: "", email: "", birthYear: "" });
+        setExtras({ annex: false, firewood: false });
+        setOpenDialog(false);
+        setConfirmedAmount(finalPrice);
+        setShowPaymentDialog(true);
+      }
+    } catch (err) {
+      // Håndter valideringsfeil
+      const newErrors = {};
+      if (err.inner) {
+        err.inner.forEach((error) => {
+          newErrors[error.path] = true;
+        });
+      }
+      setErrors(newErrors);
     }
   };
 
@@ -348,6 +382,25 @@ const CalendarComponent = () => {
     return total;
   };
 
+  const handleInputChange = async (field, value) => {
+    try {
+      let validationValue = value;
+      if (field === "birthYear") {
+        validationValue = value === "" ? undefined : Number(value);
+      }
+
+      await validationSchema.validateAt(field, {
+        ...userInfo,
+        [field]: validationValue,
+      });
+      setErrors((prev) => ({ ...prev, [field]: false }));
+    } catch (err) {
+      setErrors((prev) => ({ ...prev, [field]: true }));
+    }
+
+    setUserInfo((prev) => ({ ...prev, [field]: value }));
+  };
+
   return (
     <div className="App">
       <h1>Bestillingskalender</h1>
@@ -464,9 +517,7 @@ const CalendarComponent = () => {
               <OutlinedInput
                 label="Navn"
                 value={userInfo.name}
-                onChange={(e) =>
-                  setUserInfo({ ...userInfo, name: e.target.value })
-                }
+                onChange={(e) => handleInputChange("name", e.target.value)}
                 startAdornment={
                   <InputAdornment position="start">
                     <Person />
@@ -474,7 +525,9 @@ const CalendarComponent = () => {
                 }
               />
               {errors.name && (
-                <FormHelperText>Navn er obligatorisk</FormHelperText>
+                <FormHelperText>
+                  Vennligst skriv inn både for- og etternavn
+                </FormHelperText>
               )}
             </FormControl>
 
@@ -483,9 +536,10 @@ const CalendarComponent = () => {
               <OutlinedInput
                 label="Telefonnummer"
                 value={userInfo.phone}
-                onChange={(e) =>
-                  setUserInfo({ ...userInfo, phone: e.target.value })
-                }
+                onChange={(e) => {
+                  const onlyNumbers = e.target.value.replace(/[^0-9]/g, "");
+                  handleInputChange("phone", onlyNumbers);
+                }}
                 startAdornment={
                   <InputAdornment position="start">
                     <Phone />
@@ -493,7 +547,9 @@ const CalendarComponent = () => {
                 }
               />
               {errors.phone && (
-                <FormHelperText>Telefonnummer er obligatorisk</FormHelperText>
+                <FormHelperText>
+                  Vennligst skriv inn et gyldig 8-sifret telefonnummer
+                </FormHelperText>
               )}
             </FormControl>
 
@@ -502,9 +558,7 @@ const CalendarComponent = () => {
               <OutlinedInput
                 label="E-post"
                 value={userInfo.email}
-                onChange={(e) =>
-                  setUserInfo({ ...userInfo, email: e.target.value })
-                }
+                onChange={(e) => handleInputChange("email", e.target.value)}
                 startAdornment={
                   <InputAdornment position="start">
                     <Email />
@@ -512,7 +566,9 @@ const CalendarComponent = () => {
                 }
               />
               {errors.email && (
-                <FormHelperText>E-post er obligatorisk</FormHelperText>
+                <FormHelperText>
+                  Vennligst skriv inn en gyldig e-postadresse
+                </FormHelperText>
               )}
             </FormControl>
 
@@ -525,9 +581,13 @@ const CalendarComponent = () => {
               <OutlinedInput
                 label="Fødselsår"
                 value={userInfo.birthYear}
-                onChange={(e) =>
-                  setUserInfo({ ...userInfo, birthYear: e.target.value })
-                }
+                type="number"
+                onChange={(e) => {
+                  const year = e.target.value;
+                  if (year.length <= 4) {
+                    handleInputChange("birthYear", year);
+                  }
+                }}
                 startAdornment={
                   <InputAdornment position="start">
                     <Cake />
@@ -535,7 +595,9 @@ const CalendarComponent = () => {
                 }
               />
               {errors.birthYear && (
-                <FormHelperText>Fødselsår er obligatorisk</FormHelperText>
+                <FormHelperText>
+                  Du må være minst 25 år for å leie hytta
+                </FormHelperText>
               )}
             </FormControl>
           </Box>

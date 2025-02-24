@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .App-header {
@@ -88,6 +90,9 @@ button {
 .calendar-container {
   display: flex;
   justify-content: center;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .calendar-price {
@@ -217,4 +222,31 @@ button {
 
 .instagram-icon {
   font-size: 24px; /* Setter standard størrelse */
+}
+
+/* Gjør kalenderen mer responsiv */
+.react-calendar {
+  width: 100% !important;
+  max-width: 350px !important;
+  font-size: 0.9em !important;
+}
+
+@media (max-width: 480px) {
+  .react-calendar {
+    max-width: 100% !important;
+    padding: 0.5em !important;
+  }
+
+  .react-calendar__tile {
+    height: 45px !important;
+    padding: 0.3em 0.2em !important;
+  }
+
+  .calendar-price {
+    font-size: 0.55rem !important;
+  }
+
+  .react-calendar__tile abbr {
+    font-size: 0.75rem !important;
+  }
 }

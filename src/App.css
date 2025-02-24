@@ -93,6 +93,8 @@ button {
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
+  padding: 0 8px;
+  box-sizing: border-box;
 }
 
 .calendar-price {
@@ -229,25 +231,45 @@ button {
   width: 100% !important;
   max-width: 350px !important;
   font-size: 0.9em !important;
+  margin: 0 auto !important;
 }
 
 @media (max-width: 480px) {
   .react-calendar {
-    max-width: 100% !important;
-    padding: 0.5em !important;
+    max-width: 300px !important;  /* Reduser maksbredden på mobil */
+    padding: 0.3em !important;
+    font-size: 0.8em !important;
+    transform: scale(0.95);  /* Skaler ned kalenderen litt */
+    transform-origin: top center;
   }
 
   .react-calendar__tile {
-    height: 45px !important;
-    padding: 0.3em 0.2em !important;
+    height: 40px !important;  /* Reduser høyden på hver dato */
+    padding: 0.2em 0.1em !important;
   }
 
   .calendar-price {
-    font-size: 0.55rem !important;
+    font-size: 0.5rem !important;
   }
 
   .react-calendar__tile abbr {
-    font-size: 0.75rem !important;
+    font-size: 0.7rem !important;
+  }
+
+  /* Reduser avstanden mellom elementene */
+  .react-calendar__month-view__days {
+    gap: 1px !important;
+  }
+
+  /* Juster størrelsen på måned/år-velgeren */
+  .react-calendar__navigation button {
+    font-size: 0.9em !important;
+    padding: 4px !important;
+  }
+
+  /* Reduser padding rundt hele kalenderen */
+  .react-calendar {
+    padding: 4px !important;
   }
 }
 

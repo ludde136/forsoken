@@ -130,6 +130,17 @@ const CalendarComponent = () => {
     fetchBookings();
   }, []);
 
+  useEffect(() => {
+    if (window.innerWidth <= 480) {
+      // Sjekk om vi er på mobil
+      const viewport = document.querySelector('meta[name="viewport"]');
+      if (viewport) {
+        viewport.content =
+          "width=device-width, initial-scale=0.9, maximum-scale=1.0, user-scalable=no";
+      }
+    }
+  }, []);
+
   const handleBookingRequest = async () => {
     try {
       await validationSchema.validate(userInfo, { abortEarly: false });

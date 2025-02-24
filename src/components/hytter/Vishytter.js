@@ -13,13 +13,24 @@ import text from "../Text.json";
 
 function Vishytter() {
   return (
-    <Container maxWidth="lg">
+    <Container
+      maxWidth="lg"
+      sx={{
+        px: { xs: 1, sm: 2 }, // Mindre padding på mobil
+        width: "100%",
+        maxWidth: "100%",
+        overflow: "hidden",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           py: 4,
+          width: "100%",
+          maxWidth: "100vw",
+          overflow: "hidden",
         }}
       >
         <Typography
@@ -38,20 +49,27 @@ function Vishytter() {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            gap: { xs: 2, sm: 4 }, // Mindre gap på mobil
+            gap: { xs: 2, sm: 4 },
             justifyContent: "center",
+            width: "100%",
+            maxWidth: "100%",
           }}
         >
           {text.map((item) => (
             <Card
               key={item.navn1}
               sx={{
-                width: { xs: "100%", sm: "450px", md: "500px" }, // Responsiv bredde
+                width: {
+                  xs: "calc(100% - 16px)", // Juster for padding
+                  sm: "450px",
+                  md: "500px",
+                },
                 height: "100%",
                 transition: "transform 0.2s",
                 "&:hover": {
                   transform: "scale(1.02)",
                 },
+                margin: { xs: "0 8px", sm: 0 }, // Legg til margin på mobil
               }}
             >
               <CardHeader

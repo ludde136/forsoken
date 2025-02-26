@@ -130,17 +130,6 @@ const CalendarComponent = () => {
     fetchBookings();
   }, []);
 
-  useEffect(() => {
-    if (window.innerWidth <= 480) {
-      // Sjekk om vi er på mobil
-      const viewport = document.querySelector('meta[name="viewport"]');
-      if (viewport) {
-        viewport.content =
-          "width=device-width, initial-scale=0.9, maximum-scale=1.0, user-scalable=no";
-      }
-    }
-  }, []);
-
   const handleBookingRequest = async () => {
     try {
       await validationSchema.validate(userInfo, { abortEarly: false });
@@ -415,18 +404,16 @@ const CalendarComponent = () => {
   return (
     <div className="App">
       <h1>Bestillingskalender</h1>
-      <div className="calendar-container">
-        <Calendar
-          onChange={handleDateChange}
-          value={date}
-          tileContent={tileContent}
-          tileClassName={tileClassName}
-          view="month"
-          onDrillUp={() => null}
-          onClickMonth={() => null}
-          onClickYear={() => null}
-        />
-      </div>
+      <Calendar
+        onChange={handleDateChange}
+        value={date}
+        tileContent={tileContent}
+        tileClassName={tileClassName}
+        view="month"
+        onDrillUp={() => null}
+        onClickMonth={() => null}
+        onClickYear={() => null}
+      />
       {startDate && (
         <div className="booking-dates">
           <Typography>

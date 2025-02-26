@@ -1,27 +1,43 @@
-.react-calendar__tile {
-  height: 60px !important;  /* Redusert fra 80px */
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 4px 2px !important; /* Redusert fra 8px */
-  gap: 2px !important; /* Legg til mindre mellomrom mellom dato og pris */
+/* Grunnleggende container-stil */
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-.react-calendar__tile abbr {
-  font-size: 0.9rem !important; /* Mindre datotegn */
-  margin-bottom: 0 !important; /* Fjern margin under datoen */
+/* Prevent calendar from jumping */
+.react-calendar__month-view__weekdays__weekday,
+.react-calendar__month-view__days__day {
+  flex: 1 0 14.2857% !important;
+  min-width: 40px;
 }
 
-/* Juster avstanden mellom ukene */
-.react-calendar__month-view__days {
-  gap: 0 !important;
-}
-
-/* Juster høyden på ukedagene på toppen */
 .react-calendar__month-view__weekdays__weekday {
-  height: 32px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-} 
+  overflow: hidden;
+}
+
+/* Kalender basis-stiler */
+.react-calendar {
+  width: 350px !important;  /* Fast bredde */
+  font-family: inherit;
+  margin: 0 auto !important;
+}
+
+/* Pris-visning */
+.calendar-price {
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+/* Juster høyden på datoboksene */
+.react-calendar__tile {
+  height: 52px !important;
+  padding: 2px !important;
+}
+
+/* Juster avstanden mellom dato og pris */
+.react-calendar__tile > * {
+  margin: 1px 0 !important;
+}
+
+/* Fjernet alle media queries og zoom-relaterte stiler */

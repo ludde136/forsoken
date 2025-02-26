@@ -1,21 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Ikkefunnet from "../ikkefunnet";
 import text from "../Text.json";
 import Calender from "./Calender";
-import { IconButton, Typography, Box, Divider, Modal } from "@mui/material";
+import {
+  IconButton,
+  Typography,
+  Box,
+  Divider,
+  Modal,
+  CardMedia,
+} from "@mui/material";
 import {
   ArrowBackIos,
   ArrowForwardIos,
   CheckCircleOutline,
   Close,
 } from "@mui/icons-material";
-import { useState } from "react";
 
 function HytteInfo() {
   const [index, setIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const { sted } = useParams();
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   // Finn riktig hytte fra text.json
   const hytte = text.find((item) => item.navn1.toLowerCase() === sted);
@@ -27,6 +34,15 @@ function HytteInfo() {
 
   const gyldigeHytter = text.map((item) => item.navn1.toLowerCase());
 
+  useEffect(() => {
+    if (images && images.length > 0) {
+      images.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+      });
+    }
+  }, [images]);
+
   if (!gyldigeHytter.includes(sted)) {
     return <Ikkefunnet />;
   }
@@ -37,24 +53,31 @@ function HytteInfo() {
   }
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box
+      sx={{
+        padding: { xs: 1, sm: 3 }, // Mindre padding på mobil
+        maxWidth: "100%",
+        overflow: "hidden",
+      }}
+    >
       {/* Første seksjon med to kolonner */}
       <Box
         sx={{
           display: "grid",
           gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
-          gap: 4,
-          marginBottom: 4,
+          gap: { xs: 2, md: 4 }, // Mindre gap på mobil
+          marginBottom: { xs: 2, md: 4 },
         }}
       >
         {/* Venstre kolonne */}
-        <Box>
+        <Box sx={{ width: "100%", overflow: "hidden" }}>
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: 20,
+              gap: 10,
+              width: "100%",
             }}
           >
             <div
@@ -62,24 +85,35 @@ function HytteInfo() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: 10,
+                gap: 5, // Reduser gap på mobil
+                width: "100%",
               }}
             >
-              <IconButton onClick={handlePrev}>
+              <IconButton onClick={handlePrev} size="small">
                 <ArrowBackIos />
               </IconButton>
-              <img
+              <CardMedia
+                component="img"
                 src={images[index]}
                 alt="Slide"
+                loading="lazy"
                 style={{
-                  width: 300,
-                  height: 200,
+                  width: "100%", // Responsiv bredde
+                  maxWidth: 300, // Maks bredde
+                  height: "auto", // Auto høyde for å beholde aspect ratio
+                  maxHeight: 200,
                   objectFit: "cover",
                   cursor: "pointer",
+                  filter: isImageLoading ? "blur(10px)" : "none",
+                  transition: "filter 0.3s ease-out",
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                  MozUserSelect: "none",
                 }}
                 onClick={() => setOpenModal(true)}
+                onLoad={() => setIsImageLoading(false)}
               />
-              <IconButton onClick={handleNext}>
+              <IconButton onClick={handleNext} size="small">
                 <ArrowForwardIos />
               </IconButton>
             </div>
@@ -101,7 +135,8 @@ function HytteInfo() {
               <Close />
             </IconButton>
             <div className="modal-navigation">
-              <img
+              <CardMedia
+                component="img"
                 src={images[index]}
                 alt="Fullscreen"
                 className="modal-image"
@@ -133,12 +168,13 @@ function HytteInfo() {
         </Modal>
 
         {/* Høyre kolonne */}
-        <Box>
+        <Box sx={{ width: "100%" }}>
           <Typography
             variant="h5"
             sx={{
               marginBottom: 2,
               textAlign: { xs: "center", md: "left" },
+              fontSize: { xs: "1.2rem", sm: "1.5rem" }, // Mindre tekst på mobil
             }}
           >
             {hytte.title}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import Ikkefunnet from "../ikkefunnet";
 import text from "../Text.json";
@@ -26,7 +26,9 @@ function HytteInfo() {
 
   // Finn riktig hytte fra text.json
   const hytte = text.find((item) => item.navn1.toLowerCase() === sted);
-  const images = hytte?.images || [];
+
+  // Memoize images for performance
+  const images = useMemo(() => hytte?.images || [], [hytte]);
 
   const handleNext = () => setIndex((prev) => (prev + 1) % images.length);
   const handlePrev = () =>
@@ -35,7 +37,7 @@ function HytteInfo() {
   const gyldigeHytter = text.map((item) => item.navn1.toLowerCase());
 
   useEffect(() => {
-    if (images && images.length > 0) {
+    if (images.length > 0) {
       images.forEach((src) => {
         const img = new Image();
         img.src = src;

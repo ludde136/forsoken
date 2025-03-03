@@ -74,7 +74,10 @@ function Vishytter() {
             >
               <CardHeader
                 title={item.navn1.charAt(0).toUpperCase() + item.navn1.slice(1)}
-                titleTypographyProps={{ variant: "h6", fontSize: { xs: "1.4rem", sm: "1.6rem" } }}
+                titleTypographyProps={{
+                  variant: "h6",
+                  fontSize: { xs: "1.4rem", sm: "1.6rem" },
+                }}
                 subheader={
                   <Link
                     to={item.navn1}

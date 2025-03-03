@@ -201,7 +201,7 @@ button {
 }
 
 .navigation-overlay:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .navigation-overlay.left {
@@ -233,7 +233,6 @@ button {
   font-size: 0.9em !important;
   margin: 0 auto !important;
 }
-
 
 /* Legg til eller oppdater disse stilene */
 body {

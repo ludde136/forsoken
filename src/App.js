@@ -1,7 +1,11 @@
 import { Box } from "@mui/material";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Header from "./components/Header";
-import Vishytter from "./components/hytter/Vishytter";
 import HytteInfo from "./components/hytter/HytteInfo";
 import Footer from "./components/Footer";
 import "./App.css";
@@ -25,7 +29,10 @@ function App() {
           }}
         >
           <Routes>
-            <Route path="/" element={<Vishytter />} />
+            <Route
+              path="/"
+              element={<Navigate to="/trulsrudkollen" replace />}
+            />
             <Route path="/:sted" element={<HytteInfo />} />
           </Routes>
         </Box>

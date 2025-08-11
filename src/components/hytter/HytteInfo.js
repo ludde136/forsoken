@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import Ikkefunnet from "./ikkefunnet";
 import text from "../Text.json";
 import Calender from "./Calender";

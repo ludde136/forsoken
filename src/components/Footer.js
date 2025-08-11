@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, IconButton, Link, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 
 function Footer() {

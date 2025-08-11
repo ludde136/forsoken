@@ -1,8 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Button, Box, Typography } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
-import HomeIcon from "@mui/icons-material/Home";
-import ForestIcon from "@mui/icons-material/Forest";
+import { HomeIcon, ForestIcon } from "@mui/icons-material";
+import { useLocation } from "react-router-dom";
 
 function Header() {
   const location = useLocation();

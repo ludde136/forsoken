@@ -2,14 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import Ikkefunnet from "./ikkefunnet";
 import text from "../Text.json";
 import Calender from "./Calender";
-import {
-  IconButton,
-  Typography,
-  Box,
-  Divider,
-  Modal,
-  CardMedia,
-} from "@mui/material";
+import { IconButton, Typography, Box, Modal, CardMedia } from "@mui/material";
 import {
   ArrowBackIos,
   ArrowForwardIos,

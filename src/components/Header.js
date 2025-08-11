@@ -1,6 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Button, Box, Typography } from "@mui/material";
-import { HomeIcon, NatureIcon } from "@mui/icons-material";
+import HomeIcon from "@mui/icons-material/Home";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useLocation } from "react-router-dom";
 
 function Header() {
@@ -32,7 +33,7 @@ function Header() {
     >
       <Toolbar sx={{ minHeight: "56px", px: { xs: 1, sm: 2 } }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <NatureIcon sx={{ color: "#f59e0b", fontSize: "1.5rem" }} />
+          <FavoriteIcon sx={{ color: "#f59e0b", fontSize: "1.5rem" }} />
           <Typography
             variant="h6"
             sx={{

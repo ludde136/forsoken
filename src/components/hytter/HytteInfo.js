@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useParams } from "react-router-dom";
-import Ikkefunnet from "../ikkefunnet";
+import Ikkefunnet from "./ikkefunnet";
 import text from "../Text.json";
 import Calender from "./Calender";
 import {
@@ -21,11 +20,13 @@ import {
 function HytteInfo() {
   const [index, setIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
-  const { sted } = useParams();
   const [isImageLoading, setIsImageLoading] = useState(true);
 
+  // Alltid vis Trulsrudkollen
+  const currentSted = "trulsrudkollen";
+
   // Finn riktig hytte fra text.json
-  const hytte = text.find((item) => item.navn1.toLowerCase() === sted);
+  const hytte = text.find((item) => item.navn1.toLowerCase() === currentSted);
 
   // Memoize images for performance
   const images = useMemo(() => hytte?.images || [], [hytte]);
@@ -34,22 +35,7 @@ function HytteInfo() {
   const handlePrev = () =>
     setIndex((prev) => (prev - 1 + images.length) % images.length);
 
-  const gyldigeHytter = text.map((item) => item.navn1.toLowerCase());
-
-  useEffect(() => {
-    if (images.length > 0) {
-      images.forEach((src) => {
-        const img = new Image();
-        img.src = src;
-      });
-    }
-  }, [images]);
-
-  if (!gyldigeHytter.includes(sted)) {
-    return <Ikkefunnet />;
-  }
-
-  // Legg til sjekk for hytte
+  // Sjekk om hytten eksisterer
   if (!hytte) {
     return <Ikkefunnet />;
   }
@@ -119,7 +105,7 @@ function HytteInfo() {
                 <ArrowForwardIos />
               </IconButton>
             </div>
-            <Calender sted={sted} />
+            <Calender sted={currentSted} />
           </div>
         </Box>
 

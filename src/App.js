@@ -1,13 +1,9 @@
 import { Box } from "@mui/material";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import HytteInfo from "./components/hytter/HytteInfo";
 import Footer from "./components/Footer";
+import Ikkefunnet from "./components/hytter/ikkefunnet";
 import "./App.css";
 
 function App() {
@@ -24,16 +20,13 @@ function App() {
         <Box
           sx={{
             flex: 1,
-            paddingBottom: "70px", // Padding for footer
-            paddingTop: "64px", // Padding for header (standard AppBar height)
+            paddingBottom: "50px",
+            paddingTop: "56px",
           }}
         >
           <Routes>
-            <Route
-              path="/"
-              element={<Navigate to="/trulsrudkollen" replace />}
-            />
-            <Route path="/:sted" element={<HytteInfo />} />
+            <Route path="/" element={<HytteInfo />} />
+            <Route path="*" element={<Ikkefunnet />} />
           </Routes>
         </Box>
         <Footer />

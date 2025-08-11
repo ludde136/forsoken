@@ -52,6 +52,8 @@ const validationSchema = yup.object().shape({
   birthYear: yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : Number(value)))
+    .min(1900, "Fødselsår må være etter 1900")
+    .max(new Date().getFullYear(), "Fødselsår kan ikke være i fremtiden")
     .test("age", "Du må være minst 25 år for å leie hytta", (value) => {
       if (!value) return false;
       const currentYear = new Date().getFullYear();
@@ -79,7 +81,7 @@ const CalendarComponent = () => {
     name: "",
     phone: "",
     email: "",
-    birthYear: "",
+    birthYear: "1985", // Satt til 1985 som standard
   });
 
   const [errors, setErrors] = useState({
@@ -148,7 +150,7 @@ const CalendarComponent = () => {
         await addDoc(collection(db, "bookings"), newBooking);
         setStartDate(null);
         setEndDate(null);
-        setUserInfo({ name: "", phone: "", email: "", birthYear: "" });
+        setUserInfo({ name: "", phone: "", email: "", birthYear: "1985" }); // Resett til 1985
         setExtras({ annex: false, firewood: false });
         setOpenDialog(false);
         setConfirmedAmount(finalPrice);
@@ -168,7 +170,7 @@ const CalendarComponent = () => {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setUserInfo({ name: "", phone: "", email: "", birthYear: "" });
+    setUserInfo({ name: "", phone: "", email: "", birthYear: "1985" }); // Resett til 1985
     setErrors({ name: false, phone: false, email: false, birthYear: false });
     setExtras({ annex: false, firewood: false });
   };
@@ -423,7 +425,8 @@ const CalendarComponent = () => {
               year: "numeric",
               month: "long",
               day: "numeric",
-            })}
+            })}{" "}
+            (Ankomst kl. 14:00)
           </Typography>
           {endDate && (
             <>
@@ -434,7 +437,8 @@ const CalendarComponent = () => {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
-                })}
+                })}{" "}
+                (Avreise kl. 12:00)
               </Typography>
               <Typography variant="h6" sx={{ mt: 2, fontWeight: "bold" }}>
                 Total pris: {getTotalPrice()} kr
@@ -580,10 +584,30 @@ const CalendarComponent = () => {
                 label="Fødselsår"
                 value={userInfo.birthYear}
                 type="number"
+                inputProps={{
+                  min: 1900,
+                  max: new Date().getFullYear(),
+                  step: 1,
+                  placeholder: "1985",
+                }}
                 onChange={(e) => {
                   const year = e.target.value;
-                  if (year.length <= 4) {
+                  // Kun tillat 4-sifret årstall
+                  if (year.length <= 4 && /^\d{0,4}$/.test(year)) {
                     handleInputChange("birthYear", year);
+                  }
+                }}
+                onBlur={(e) => {
+                  const year = parseInt(e.target.value);
+                  if (
+                    year &&
+                    (year < 1900 || year > new Date().getFullYear())
+                  ) {
+                    // Vis feilmelding hvis årstall er utenfor gyldig område
+                    setErrors((prev) => ({
+                      ...prev,
+                      birthYear: "Ugyldig årstall",
+                    }));
                   }
                 }}
                 startAdornment={
@@ -594,7 +618,9 @@ const CalendarComponent = () => {
               />
               {errors.birthYear && (
                 <FormHelperText>
-                  Du må være minst 25 år for å leie hytta
+                  {errors.birthYear === true
+                    ? "Du må være minst 25 år for å leie hytta"
+                    : errors.birthYear}
                 </FormHelperText>
               )}
             </FormControl>

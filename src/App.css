@@ -1,7 +1,40 @@
+/* CSS-variabler for naturtema */
+:root {
+  --forest-dark: #2d5016;
+  --forest-light: #4a7c59;
+  --mountain-gray: #6b7280;
+  --sky-blue: #3b82f6;
+  --sun-yellow: #f59e0b;
+  --earth-brown: #8b4513;
+  --moss-green: #6b8e23;
+  --stone-light: #d1d5db;
+  --water-blue: #1e40af;
+  --autumn-orange: #ea580c;
+}
+
+/* Global styles - Flyttet fra index.css */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* Naturinspirert App-styling */
 .App {
   text-align: center;
   max-width: 100vw;
   overflow-x: hidden;
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+  min-height: 100vh;
 }
 
 .App-header {
@@ -97,30 +130,28 @@ button {
   box-sizing: border-box;
 }
 
+/* Prevent calendar from jumping */
+.react-calendar__month-view__weekdays__weekday,
+.react-calendar__month-view__days__day {
+  flex: 1 0 14.2857% !important;
+  min-width: 40px;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  overflow: hidden;
+}
+
+/* Kalender basis-stiler */
+.react-calendar {
+  width: 350px !important; /* Fast bredde */
+  font-family: inherit;
+  margin: 0 auto !important;
+}
+
+/* Pris-visning */
 .calendar-price {
-  display: block;
-  font-size: 0.6rem !important;
-  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.7rem;
   line-height: 1;
-  white-space: nowrap;
-}
-
-.booking-dates {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.booking-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-  justify-content: center;
-}
-
-/* Legg til ny styling for datoene */
-.react-calendar__tile abbr {
-  font-size: 0.8rem !important;
-  font-weight: normal !important;
 }
 
 /* Juster høyden på datoboksene */
@@ -226,12 +257,10 @@ button {
   font-size: 24px; /* Setter standard størrelse */
 }
 
-/* Gjør kalenderen mer responsiv */
-.react-calendar {
-  width: 100% !important;
-  max-width: 350px !important;
-  font-size: 0.9em !important;
-  margin: 0 auto !important;
+/* Legg til ny styling for datoene */
+.react-calendar__tile abbr {
+  font-size: 0.8rem !important;
+  font-weight: normal !important;
 }
 
 /* Legg til eller oppdater disse stilene */
@@ -259,5 +288,249 @@ body {
   .MuiContainer-root {
     padding-left: 4px !important;
     padding-right: 4px !important;
+  }
+}
+
+/* Responsive container */
+.MuiContainer-root {
+  max-width: 1200px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+/* Kompakt spacing */
+.compact-spacing {
+  margin: 8px 0;
+  padding: 8px 0;
+}
+
+/* Forbedret card styling med naturtema */
+.MuiCard-root {
+  border-radius: 16px !important;
+  box-shadow: 0 4px 15px rgba(45, 80, 22, 0.1) !important;
+  transition: all 0.3s ease !important;
+  border: 2px solid transparent !important;
+}
+
+.MuiCard-root:hover {
+  box-shadow: 0 8px 30px rgba(45, 80, 22, 0.25) !important;
+  border-color: #4a7c59 !important;
+}
+
+/* Responsive typography */
+@media (max-width: 600px) {
+  .MuiTypography-h4 {
+    font-size: 1.5rem !important;
+  }
+
+  .MuiTypography-h6 {
+    font-size: 1.1rem !important;
+  }
+
+  .MuiTypography-body1 {
+    font-size: 0.875rem !important;
+  }
+
+  .MuiTypography-body2 {
+    font-size: 0.8rem !important;
+  }
+}
+
+/* Naturinspirert modal styling */
+.modal-container {
+  background: linear-gradient(
+    135deg,
+    rgba(45, 80, 22, 0.9) 0%,
+    rgba(74, 124, 89, 0.9) 100%
+  );
+  backdrop-filter: blur(10px);
+}
+
+.modal-image {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 3px solid #f59e0b;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Kompakt navigation med naturtema */
+.modal-navigation {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #4a7c59 0%, #6b8e23 100%);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid #f59e0b;
+  box-shadow: 0 4px 15px rgba(45, 80, 22, 0.3);
+}
+
+.modal-nav-button:hover {
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+  transform: translateY(-50%) scale(1.15);
+  box-shadow: 0 6px 20px rgba(45, 80, 22, 0.4);
+}
+
+/* Forbedret footer med naturtema */
+.footer-icon {
+  font-size: 1.5rem;
+  margin: 0 8px;
+  transition: all 0.3s ease;
+  color: #f59e0b;
+}
+
+.footer-icon:hover {
+  transform: scale(1.2);
+  color: #ea580c;
+  filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.4));
+}
+
+/* Naturinspirert kalender-styling */
+.react-calendar {
+  border: 3px solid #4a7c59 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 25px rgba(45, 80, 22, 0.2) !important;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+}
+
+.react-calendar__tile {
+  border-radius: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.react-calendar__tile:hover {
+  background: linear-gradient(135deg, #4a7c59 0%, #6b8e23 100%) !important;
+  color: white !important;
+  transform: scale(1.05) !important;
+}
+
+/* Naturinspirert button styling med bedre kontrast */
+.MuiButton-root {
+  background: linear-gradient(135deg, #4a7c59 0%, #6b8e23 100%) !important;
+  border: 2px solid #2d5016 !important;
+  box-shadow: 0 4px 15px rgba(45, 80, 22, 0.2) !important;
+  transition: all 0.3s ease !important;
+  color: white !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+.MuiButton-root:hover {
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(45, 80, 22, 0.4) !important;
+  color: white !important;
+}
+
+/* Spesifikk styling for sekundære knapper (som "Avbryt") */
+.MuiButton-root.MuiButton-colorSecondary {
+  background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%) !important;
+  border: 2px solid #4b5563 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+}
+
+.MuiButton-root.MuiButton-colorSecondary:hover {
+  background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(75, 85, 99, 0.4) !important;
+  color: white !important;
+}
+
+/* Spesifikk styling for primære knapper (som "Bekreft booking") */
+.MuiButton-root.MuiButton-colorPrimary {
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%) !important;
+  border: 2px solid #1e3a0f !important;
+  color: white !important;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+}
+
+.MuiButton-root.MuiButton-colorPrimary:hover {
+  background: linear-gradient(135deg, #1e3a0f 0%, #2d5016 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(30, 58, 15, 0.5) !important;
+  color: white !important;
+}
+
+/* Naturinspirert input styling */
+.MuiOutlinedInput-root {
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.MuiOutlinedInput-root:hover {
+  border-color: #4a7c59 !important;
+  box-shadow: 0 2px 8px rgba(45, 80, 22, 0.1) !important;
+}
+
+.MuiOutlinedInput-root.Mui-focused {
+  border-color: #2d5016 !important;
+  box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1) !important;
+}
+
+/* Naturinspirert dialog styling */
+.MuiDialog-paper {
+  border-radius: 20px !important;
+  border: 3px solid #4a7c59 !important;
+  box-shadow: 0 12px 40px rgba(45, 80, 22, 0.3) !important;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+}
+
+/* Naturinspirert checkbox styling */
+.MuiCheckbox-root {
+  color: #4a7c59 !important;
+}
+
+.MuiCheckbox-root.Mui-checked {
+  color: #2d5016 !important;
+}
+
+/* Naturinspirert divider styling */
+.MuiDivider-root {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #4a7c59 50%,
+    transparent 100%
+  ) !important;
+  height: 2px !important;
+  border-radius: 1px !important;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Forbedret focus states */
+button:focus,
+a:focus {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
+}
+
+/* Loading states */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }

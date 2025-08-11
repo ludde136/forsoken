@@ -150,8 +150,8 @@ button {
 
 /* Pris-visning */
 .calendar-price {
-  font-size: 0.7rem;
-  line-height: 1;
+  font-size: 0.8rem !important;
+  line-height: 1 !important;
 }
 
 /* Juster høyden på datoboksene */

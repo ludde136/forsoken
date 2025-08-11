@@ -1,6 +1,5 @@
 import React from "react";
-import { AppBar, Toolbar, Button, Box, Typography } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
+import { AppBar, Toolbar, Box, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useLocation } from "react-router-dom";
 
@@ -8,6 +7,9 @@ function Header() {
   const location = useLocation();
 
   const handleHomeClick = () => {
+    // Send custom event for å tilbakestille bildet til det første
+    window.dispatchEvent(new CustomEvent("resetImageToFirst"));
+
     // Hvis vi ikke er på hovedsiden, naviger til hjem
     if (location.pathname !== "/") {
       window.location.href = "/";
@@ -23,55 +25,72 @@ function Header() {
   return (
     <AppBar
       position="fixed"
+      className="modern-header"
       sx={{
-        background: "linear-gradient(135deg, #2d5016 0%, #4a7c59 100%)",
-        backdropFilter: "blur(10px)",
-        boxShadow: "0 4px 20px rgba(45, 80, 22, 0.3)",
-        height: "56px",
-        borderBottom: "2px solid #6b8e23",
+        background: "rgba(45, 80, 22, 0.95)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        boxShadow: "0 12px 40px rgba(45, 80, 22, 0.3)",
+        height: "64px",
+        borderBottom: "2px solid rgba(245, 158, 11, 0.3)",
+        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        "&:hover": {
+          background: "rgba(45, 80, 22, 0.98)",
+          boxShadow: "0 16px 50px rgba(45, 80, 22, 0.4)",
+        },
       }}
     >
-      <Toolbar sx={{ minHeight: "56px", px: { xs: 1, sm: 2 } }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <FavoriteIcon sx={{ color: "#f59e0b", fontSize: "1.5rem" }} />
+      <Toolbar sx={{ minHeight: "64px", px: { xs: 2, sm: 3 } }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+            animation: "slideInLeft 0.8s ease-out",
+            cursor: "pointer",
+            padding: "8px 16px",
+            borderRadius: "12px",
+            transition: "all 0.3s ease",
+            "&:hover": {
+              background: "rgba(255, 255, 255, 0.1)",
+              transform: "scale(1.02)",
+            },
+          }}
+          onClick={handleHomeClick}
+        >
+          <FavoriteIcon
+            sx={{
+              color: "#f59e0b",
+              fontSize: "2rem",
+              filter: "drop-shadow(0 2px 4px rgba(245, 158, 11, 0.3))",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                transform: "scale(1.1) rotate(5deg)",
+                filter: "drop-shadow(0 4px 8px rgba(245, 158, 11, 0.5))",
+              },
+            }}
+          />
           <Typography
             variant="h6"
             sx={{
-              color: "white",
-              fontWeight: 600,
-              fontSize: { xs: "1rem", sm: "1.2rem" },
-              textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+              color: "#ffffff",
+              fontWeight: 700,
+              fontSize: { xs: "1.1rem", sm: "1.4rem" },
+              textShadow:
+                "0 2px 4px rgba(0,0,0,0.8), 0 4px 8px rgba(0,0,0,0.6)",
+              letterSpacing: "0.5px",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                textShadow:
+                  "0 4px 8px rgba(0,0,0,0.9), 0 6px 12px rgba(0,0,0,0.7)",
+                transform: "scale(1.02)",
+                color: "#f8fafc",
+              },
             }}
           >
             Trulsrudkollen
           </Typography>
         </Box>
-        <Box sx={{ flexGrow: 1 }} />
-        <Button
-          onClick={handleHomeClick}
-          startIcon={<HomeIcon />}
-          variant="contained"
-          size="small"
-          sx={{
-            background: "linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)",
-            "&:hover": {
-              background: "linear-gradient(135deg, #ea580c 0%, #dc2626 100%)",
-              transform: "translateY(-2px)",
-              boxShadow: "0 6px 20px rgba(245, 158, 11, 0.4)",
-            },
-            textTransform: "none",
-            borderRadius: 3,
-            px: 2.5,
-            py: 0.75,
-            transition: "all 0.3s ease",
-            fontSize: "0.875rem",
-            fontWeight: 600,
-            color: "white",
-            border: "2px solid rgba(255,255,255,0.2)",
-          }}
-        >
-          Hjem
-        </Button>
         <Box sx={{ flexGrow: 1 }} />
       </Toolbar>
     </AppBar>

@@ -1,7 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Box, Typography, Button } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Header() {
   const location = useLocation();

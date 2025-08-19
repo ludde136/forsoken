@@ -9,7 +9,7 @@ import {
   Container,
 } from "@mui/material";
 import { Lock, Visibility, VisibilityOff } from "@mui/icons-material";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function PasswordProtection({ onPasswordCorrect }) {
   const [password, setPassword] = useState("");
@@ -17,7 +17,6 @@ function PasswordProtection({ onPasswordCorrect }) {
   const [error, setError] = useState("");
   const [attempts, setAttempts] = useState(0);
   const navigate = useNavigate();
-  const location = useLocation();
 
   // Sjekk om brukeren allerede har riktig passord (fra localStorage)
   useEffect(() => {

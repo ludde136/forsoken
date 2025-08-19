@@ -11,7 +11,7 @@ import {
 } from "@mui/icons-material";
 
 function HytteInfo() {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(5); // Start med sjette bilde som sannsynligvis er et hyttebilde
   const [openModal, setOpenModal] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
 
@@ -23,6 +23,12 @@ function HytteInfo() {
 
   // Memoize images for performance
   const images = useMemo(() => hytte?.images || [], [hytte]);
+
+  // Debug: Log bildene for å se hva som skjer
+  console.log("Hytte:", hytte);
+  console.log("Images:", images);
+  console.log("Current index:", index);
+  console.log("Current image:", images[index]);
 
   // Lyt til custom event for å tilbakestille bildet til det første
   useEffect(() => {
@@ -41,6 +47,34 @@ function HytteInfo() {
   const handleNext = () => setIndex((prev) => (prev + 1) % images.length);
   const handlePrev = () =>
     setIndex((prev) => (prev - 1 + images.length) % images.length);
+
+  // Touch-støtte for mobil
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      handlePrev(); // Swipe til venstre = gå til forrige bilde
+    }
+    if (isRightSwipe) {
+      handleNext(); // Swipe til høyre = gå til neste bilde
+    }
+  };
 
   // Sjekk om hytten eksisterer
   if (!hytte) {
@@ -93,7 +127,6 @@ function HytteInfo() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: 8,
                 width: "100%",
                 padding: "20px",
                 borderRadius: "20px",
@@ -103,62 +136,129 @@ function HytteInfo() {
                 boxShadow: "0 8px 32px rgba(45, 80, 22, 0.12)",
               }}
             >
-              <IconButton
-                onClick={handlePrev}
-                size="medium"
-                className="hover-lift"
-                sx={{
-                  background: "rgba(74, 124, 89, 0.1)",
-                  color: "#2d5016",
-                  "&:hover": {
-                    background: "rgba(74, 124, 89, 0.2)",
-                    transform: "scale(1.1)",
-                  },
-                  transition: "all 0.3s ease",
-                }}
-              >
-                <ArrowBackIos />
-              </IconButton>
-              <CardMedia
-                component="img"
-                src={images[index]}
-                alt="Slide"
-                loading="lazy"
+              <div
                 style={{
-                  width: "100%",
-                  maxWidth: 350,
-                  height: "auto",
-                  maxHeight: 250,
-                  objectFit: "cover",
-                  cursor: "pointer",
-                  filter: isImageLoading ? "blur(10px)" : "none",
-                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                  userSelect: "none",
-                  WebkitUserSelect: "none",
-                  MozUserSelect: "none",
-                  borderRadius: "16px",
-                  boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
+                  position: "relative",
+                  display: "inline-block",
                 }}
-                onClick={() => setOpenModal(true)}
-                onLoad={() => setIsImageLoading(false)}
-                className="hover-lift"
-              />
-              <IconButton
-                onClick={handleNext}
-                size="medium"
-                className="hover-lift"
-                sx={{
-                  background: "rgba(74, 124, 89, 0.1)",
-                  color: "#2d5016",
-                  "&:hover": {
-                    background: "rgba(74, 124, 89, 0.2)",
-                    transform: "scale(1.1)",
-                  },
-                  transition: "all 0.3s ease",
-                }}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
               >
-                <ArrowForwardIos />
-              </IconButton>
+                <CardMedia
+                  component="img"
+                  src={images[index]}
+                  alt="Slide"
+                  loading="lazy"
+                  onLoad={() => setIsImageLoading(false)}
+                  style={{
+                    width: "100%",
+                    maxWidth: 350,
+                    height: "auto",
+                    maxHeight: 250,
+                    objectFit: "cover",
+                    filter: isImageLoading ? "blur(10px)" : "none",
+                    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                    userSelect: "none",
+                    WebkitUserSelect: "none",
+                    MozUserSelect: "none",
+                    borderRadius: "16px",
+                    boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
+                    touchAction: "none",
+                  }}
+                  className="hover-lift"
+                />
+
+                {/* Venstre klikkbar side for forrige bilde */}
+                <div
+                  onClick={handlePrev}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: "33%",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "transparent",
+                    transition: "background-color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "rgba(74, 124, 89, 0.1)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "transparent";
+                  }}
+                >
+                  <ArrowBackIos
+                    style={{
+                      color: "rgba(0, 0, 0, 0.7)",
+                      fontSize: "2rem",
+                      filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+                      transition: "all 0.2s ease",
+                    }}
+                  />
+                </div>
+
+                {/* Midten - klikkbar for fullskjerm */}
+                <div
+                  onClick={() => setOpenModal(true)}
+                  style={{
+                    position: "absolute",
+                    left: "33%",
+                    top: 0,
+                    bottom: 0,
+                    width: "34%",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "transparent",
+                    transition: "background-color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "rgba(74, 124, 89, 0.05)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "transparent";
+                  }}
+                />
+
+                {/* Høyre klikkbar side for neste bilde */}
+                <div
+                  onClick={handleNext}
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: "33%",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "transparent",
+                    transition: "background-color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "rgba(74, 124, 89, 0.1)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "transparent";
+                  }}
+                >
+                  <ArrowForwardIos
+                    style={{
+                      color: "rgba(0, 0, 0, 0.7)",
+                      fontSize: "2rem",
+                      filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+                      transition: "all 0.2s ease",
+                    }}
+                  />
+                </div>
+              </div>
             </div>
             <Box className="glass-card" sx={{ width: "100%" }}>
               <Calender sted={currentSted} />
@@ -171,51 +271,82 @@ function HytteInfo() {
           open={openModal}
           onClose={() => setOpenModal(false)}
           className="modal-container"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
         >
-          <div className="modal-content">
-            <IconButton
-              onClick={() => setOpenModal(false)}
-              className="modal-close-button"
-              sx={{
-                background: "rgba(0, 0, 0, 0.7)",
-                color: "white",
-                "&:hover": {
-                  background: "rgba(0, 0, 0, 0.9)",
-                  transform: "scale(1.1)",
-                },
-                transition: "all 0.3s ease",
-              }}
+          <div
+            className="modal-backdrop"
+            onClick={() => setOpenModal(false)}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            <div
+              className="modal-content"
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+              onClick={(e) => e.stopPropagation()}
             >
-              <Close />
-            </IconButton>
-            <div className="modal-navigation">
-              <CardMedia
-                component="img"
-                src={images[index]}
-                alt="Fullscreen"
-                className="modal-image"
-              />
-              <div
-                className="navigation-overlay left"
+              <IconButton
                 onClick={(e) => {
                   e.stopPropagation();
-                  handlePrev();
+                  setOpenModal(false);
+                }}
+                className="modal-close-button"
+                sx={{
+                  background: "rgba(0, 0, 0, 0.7)",
+                  color: "white",
+                  "&:hover": {
+                    background: "rgba(0, 0, 0, 0.9)",
+                    transform: "scale(1.1)",
+                  },
+                  transition: "all 0.3s ease",
                 }}
               >
-                <IconButton className="modal-nav-button">
-                  <ArrowBackIos />
-                </IconButton>
-              </div>
+                <Close />
+              </IconButton>
               <div
-                className="navigation-overlay right"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleNext();
-                }}
+                className="modal-navigation"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+                onClick={(e) => e.stopPropagation()}
               >
-                <IconButton className="modal-nav-button">
-                  <ArrowForwardIos />
-                </IconButton>
+                <CardMedia
+                  component="img"
+                  src={images[index]}
+                  alt="Fullscreen"
+                  className="modal-image"
+                  onTouchStart={onTouchStart}
+                  onTouchMove={onTouchMove}
+                  onTouchEnd={onTouchEnd}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ touchAction: "none" }}
+                />
+                <div
+                  className="navigation-overlay left"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrev();
+                  }}
+                >
+                  <IconButton className="modal-nav-button">
+                    <ArrowBackIos />
+                  </IconButton>
+                </div>
+                <div
+                  className="navigation-overlay right"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNext();
+                  }}
+                >
+                  <IconButton className="modal-nav-button">
+                    <ArrowForwardIos />
+                  </IconButton>
+                </div>
               </div>
             </div>
           </div>

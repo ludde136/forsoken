@@ -1,6 +1,11 @@
 export const translations = {
   no: {
     title: "For hyttegjester",
+    tabs: {
+      info: "Informasjon",
+      contact: "Kontakt",
+      feedback: "Tilbakemelding",
+    },
     welcome: {
       title: "Velkommen til Trulsrudkollen!",
       description:
@@ -110,7 +115,7 @@ export const translations = {
           secondary: "Ring hvis du har spørsmål eller problemer",
         },
         email: {
-          primary: "E-post",
+          primary: "E-post: ludde1910@hotmail.com",
           secondary: "Kontakt oss gjerne på e-post for ikke-akutt henvendelser",
         },
       },
@@ -122,13 +127,53 @@ export const translations = {
         },
         hospital: {
           primary: "Nærmeste sykehus",
-          secondary: "Konsultér Google Maps for nærmeste legevakt",
+          secondary: "Bærum sykehus",
         },
+      },
+    },
+    feedback: {
+      title: "Tilbakemelding",
+      subtitle: "Vi setter stor pris på din tilbakemelding!",
+      description:
+        "Hjelp oss å gjøre oppholdet ditt enda bedre ved å dele dine erfaringer og forslag.",
+      form: {
+        name: "Navn (valgfritt)",
+        email: "E-post (valgfritt)",
+        stayPeriod: "Oppholdsperiode",
+        stayPeriodPlaceholder: "F.eks. 15.-22. juli 2024",
+        rating: "Vurdering av oppholdet",
+        ratingLabels: {
+          5: "Utmerket",
+          4: "Veldig bra",
+          3: "Bra",
+          2: "Middels",
+          1: "Dårlig",
+        },
+        feedback: "Din tilbakemelding",
+        feedbackPlaceholder:
+          "Fortell oss om ditt opphold, hva du likte, forslag til forbedringer, etc.",
+        category: "Kategori",
+        categories: {
+          general: "Generelt",
+          facilities: "Fasiliteter",
+          cleanliness: "Ryddighet",
+          location: "Beliggenhet",
+          communication: "Kommunikasjon",
+        },
+        submit: "Send tilbakemelding",
+        submitting: "Sender...",
+        success: "Takk for din tilbakemelding!",
+        error: "Beklager, noe gikk galt. Prøv igjen senere.",
       },
     },
   },
   en: {
     title: "For Cabin Guests",
+    tabs: {
+      info: "Information",
+      contact: "Contact",
+      feedback: "Feedback",
+    },
     welcome: {
       title: "Welcome to Trulsrudkollen!",
       description:
@@ -240,7 +285,7 @@ export const translations = {
           secondary: "Call if you have questions or problems",
         },
         email: {
-          primary: "Email",
+          primary: "Email: ludde1910@hotmail.com",
           secondary:
             "Feel free to contact us by email for non-urgent inquiries",
         },
@@ -253,8 +298,43 @@ export const translations = {
         },
         hospital: {
           primary: "Nearest Hospital",
-          secondary: "Consult Google Maps for nearest emergency room",
+          secondary: "Bærum Hospital",
         },
+      },
+    },
+    feedback: {
+      title: "Feedback",
+      subtitle: "We greatly appreciate your feedback!",
+      description:
+        "Help us make your stay even better by sharing your experiences and suggestions.",
+      form: {
+        name: "Name (optional)",
+        email: "Email (optional)",
+        stayPeriod: "Stay period",
+        stayPeriodPlaceholder: "E.g. July 15-22, 2024",
+        rating: "Stay rating",
+        ratingLabels: {
+          5: "Excellent",
+          4: "Very good",
+          3: "Good",
+          2: "Fair",
+          1: "Poor",
+        },
+        feedback: "Your feedback",
+        feedbackPlaceholder:
+          "Tell us about your stay, what you liked, suggestions for improvements, etc.",
+        category: "Category",
+        categories: {
+          general: "General",
+          facilities: "Facilities",
+          cleanliness: "Cleanliness",
+          location: "Location",
+          communication: "Communication",
+        },
+        submit: "Submit feedback",
+        submitting: "Submitting...",
+        success: "Thank you for your feedback!",
+        error: "Sorry, something went wrong. Please try again later.",
       },
     },
   },

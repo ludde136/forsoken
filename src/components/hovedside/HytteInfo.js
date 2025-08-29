@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect } from "react";
-import Ikkefunnet from "./ikkefunnet";
 import text from "../Text.json";
 import Calender from "./Calender";
-import { IconButton, Typography, Box, Modal, CardMedia } from "@mui/material";
+import { IconButton, Typography, Box, Modal } from "@mui/material";
+import { CardMedia } from "@mui/material";
 import {
   ArrowBackIos,
   ArrowForwardIos,
@@ -15,11 +15,8 @@ function HytteInfo() {
   const [openModal, setOpenModal] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
 
-  // Alltid vis Trulsrudkollen
-  const currentSted = "trulsrudkollen";
-
-  // Finn riktig hytte fra text.json
-  const hytte = text.find((item) => item.navn1.toLowerCase() === currentSted);
+  // Hent hytte fra text.json (nå et direkte objekt)
+  const hytte = text;
 
   // Memoize images for performance
   const images = useMemo(() => hytte?.images || [], [hytte]);
@@ -78,7 +75,13 @@ function HytteInfo() {
 
   // Sjekk om hytten eksisterer
   if (!hytte) {
-    return <Ikkefunnet />;
+    return (
+      <Box sx={{ textAlign: "center", padding: 4 }}>
+        <Typography variant="h4" color="error">
+          Hytte ikke funnet
+        </Typography>
+      </Box>
+    );
   }
 
   return (
@@ -261,7 +264,7 @@ function HytteInfo() {
               </div>
             </div>
             <Box className="glass-card" sx={{ width: "100%" }}>
-              <Calender sted={currentSted} />
+              <Calender sted="trulsrudkollen" />
             </Box>
           </div>
         </Box>

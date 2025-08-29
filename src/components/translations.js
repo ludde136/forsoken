@@ -3,13 +3,15 @@ export const translations = {
     title: "For hyttegjester",
     tabs: {
       info: "Informasjon",
-      contact: "Kontakt",
+      hiking: "Turguide",
       feedback: "Tilbakemelding",
     },
     welcome: {
       title: "Velkommen til Trulsrudkollen!",
       description:
         "Vi ønsker deg et fantastisk opphold i vår hytte! Denne siden inneholder all den praktiske informasjonen du trenger for å gjøre oppholdet ditt så behagelig som mulig. Ta gjerne kontakt hvis du har spørsmål.",
+      instagram:
+        "📸 Følg oss på Instagram @trulsrudkollen og del gjerne dine opplevelser med #trulsrudkollen hvis du har lyst!",
     },
     arrival: {
       title: "Ankomst og bruk av hytta",
@@ -61,8 +63,7 @@ export const translations = {
       },
       electricity: {
         title: "Lys - strøm",
-        description1:
-          "Sentralbryter på endevegg mellom gang og stue. Trykk en gang på knapp til høyre, for å skru på strøm.",
+        description1: "",
         description2:
           "Hytta har kun solcelleanlegg, så hjelp oss å begrense strømforbruket 😊",
       },
@@ -104,6 +105,46 @@ export const translations = {
         title: "Ved",
         description:
           "For vedfyring inne, hent ved i uthuset. Kode på lås – samme som på nøkkelboks.",
+      },
+    },
+    hiking: {
+      title: "Omgivelsene/utsikten",
+      trails: {
+        trulsrudkollen: {
+          title: "Eventyrsti til Trulsrudkollen",
+          description:
+            "Følg eventyrsti bak hytta til den andre Trulsrudkollen med utsikt innover marka. Plukk noen bær på veien for en ekstra naturlig opplevelse.",
+        },
+        gullhaug: {
+          title: "Buss fra Gullhaug stasjon",
+          description:
+            "Ta bussen hjem fra Gullhaug stasjon for en enkel retur til sivilisasjonen.",
+        },
+        solfjellsstua: {
+          title: "Utsiktsvandring Solfjellsstua",
+          description:
+            "Opplev fantastisk utsikt på en vandring til Solfjellsstua.",
+        },
+        baerumsverk: {
+          title: "Pannekaker på Bærums verk",
+          description:
+            "Ta en pause og spis en deilig pannekake på Bærums verk.",
+        },
+        kolsastopp: {
+          title: "Kolsåstopp",
+          description:
+            "Ta en vandring på Søndre og/eller Nordre Kolsåstopp for flotte utsikter over området.",
+        },
+        kjaglidalen: {
+          title: "Kjaglidalen naturreservat",
+          description:
+            "Følg Kjaglidalen og gå tur i de vakre naturreservatene her.",
+        },
+        pilgrim: {
+          title: "Pilegrimsleden til Nidaros",
+          description:
+            "Følg den historiske pilegrimsleden til Nidaros for en spirituell og kulturell opplevelse.",
+        },
       },
     },
     contact: {
@@ -171,13 +212,15 @@ export const translations = {
     title: "For Cabin Guests",
     tabs: {
       info: "Information",
-      contact: "Contact",
+      hiking: "Hiking Guide",
       feedback: "Feedback",
     },
     welcome: {
       title: "Welcome to Trulsrudkollen!",
       description:
         "We wish you a fantastic stay in our cabin! This page contains all the practical information you need to make your stay as comfortable as possible. Please don't hesitate to contact us if you have any questions.",
+      instagram:
+        "📸 Follow us on Instagram @trulsrudkollen and feel free to share your experiences with #trulsrudkollen if you'd like!",
     },
     arrival: {
       title: "Arrival and Cabin Usage",
@@ -230,8 +273,7 @@ export const translations = {
       },
       electricity: {
         title: "Light - Electricity",
-        description1:
-          "Main switch on the end wall between hallway and living room. Press the button to the right once to turn on electricity.",
+        description1: "",
         description2:
           "The cabin only has solar power, so help us limit power consumption 😊",
       },
@@ -299,6 +341,45 @@ export const translations = {
         hospital: {
           primary: "Nearest Hospital",
           secondary: "Bærum Hospital",
+        },
+      },
+    },
+    hiking: {
+      title: "Surroundings/Views",
+      trails: {
+        trulsrudkollen: {
+          title: "Adventure trail to Trulsrudkollen",
+          description:
+            "Follow the adventure trail behind the cabin to the second Trulsrudkollen with views over the forest. Pick some berries along the way for an extra natural experience.",
+        },
+        gullhaug: {
+          title: "Bus from Gullhaug station",
+          description:
+            "Take the bus home from Gullhaug station for an easy return to civilization.",
+        },
+        solfjellsstua: {
+          title: "Scenic hike to Solfjellsstua",
+          description: "Experience fantastic views on a hike to Solfjellsstua.",
+        },
+        baerumsverk: {
+          title: "Pancakes at Bærums verk",
+          description:
+            "Take a break and eat a delicious pancake at Bærums verk.",
+        },
+        kolsastopp: {
+          title: "Kolsåstopp",
+          description:
+            "Take a hike on South and/or North Kolsåstopp for great views over the area.",
+        },
+        kjaglidalen: {
+          title: "Kjaglidalen nature reserve",
+          description:
+            "Follow Kjaglidalen and hike in the beautiful nature reserves here.",
+        },
+        pilgrim: {
+          title: "Pilgrim's path to Nidaros",
+          description:
+            "Follow the historical pilgrim's path to Nidaros for a spiritual and cultural experience.",
         },
       },
     },

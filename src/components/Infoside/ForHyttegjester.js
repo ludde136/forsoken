@@ -37,11 +37,11 @@ import {
   LocalDining,
   OutdoorGrill,
   Storage,
+  Instagram as InstagramIcon,
 } from "@mui/icons-material";
-import { translations } from "./translations";
-import { db } from "../firebase";
+import { translations } from "../translations";
+import { db } from "../../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-
 // TabPanel komponent
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -54,6 +54,142 @@ function TabPanel({ children, value, index, ...other }) {
     >
       {value === index && <Box>{children}</Box>}
     </div>
+  );
+}
+
+// Gjenbrukbar kontaktinformasjon komponent
+function ContactInfo({ t }) {
+  return (
+    <Paper
+      elevation={3}
+      sx={{
+        padding: 4,
+        marginBottom: 4,
+        borderRadius: 3,
+        background: "rgba(255, 255, 255, 0.95)",
+        border: "2px solid rgba(74, 124, 89, 0.2)",
+      }}
+    >
+      <Typography
+        variant="h5"
+        sx={{
+          marginBottom: 3,
+          color: "#2d5016",
+          fontWeight: 600,
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+        }}
+      >
+        <Phone sx={{ color: "#4a7c59" }} />
+        {t.contact.title}
+      </Typography>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+          gap: 3,
+        }}
+      >
+        <Box>
+          <Typography variant="h6" sx={{ color: "#4a7c59", marginBottom: 2 }}>
+            {t.contact.duringStay.title}
+          </Typography>
+          <List dense>
+            <ListItem
+              component="a"
+              href={`tel:${t.contact.duringStay.phone.primary.replace(
+                "Telefon: ",
+                ""
+              )}`}
+              sx={{
+                textDecoration: "none",
+                color: "inherit",
+                "&:hover": {
+                  backgroundColor: "rgba(74, 124, 89, 0.1)",
+                  borderRadius: 1,
+                },
+              }}
+            >
+              <ListItemIcon>
+                <Phone sx={{ color: "#4a7c59" }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={t.contact.duringStay.phone.primary}
+                secondary={t.contact.duringStay.phone.secondary}
+              />
+            </ListItem>
+            <ListItem
+              component="a"
+              href={`mailto:${t.contact.duringStay.email.primary.replace(
+                "E-post: ",
+                ""
+              )}`}
+              sx={{
+                textDecoration: "none",
+                color: "inherit",
+                "&:hover": {
+                  backgroundColor: "rgba(74, 124, 89, 0.1)",
+                  borderRadius: 1,
+                },
+              }}
+            >
+              <ListItemIcon>
+                <Email sx={{ color: "#4a7c59" }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={t.contact.duringStay.email.primary}
+                secondary={t.contact.duringStay.email.secondary}
+              />
+            </ListItem>
+          </List>
+        </Box>
+        <Box>
+          <Typography variant="h6" sx={{ color: "#4a7c59", marginBottom: 2 }}>
+            {t.contact.emergency.title}
+          </Typography>
+          <List dense>
+            <ListItem>
+              <ListItemIcon>
+                <Info sx={{ color: "#dc2626" }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={t.contact.emergency.emergency.primary}
+                secondary={t.contact.emergency.emergency.secondary}
+              />
+            </ListItem>
+            <ListItem
+              component="a"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.open(
+                  "https://maps.google.com/?q=Bærum+sykehus,+Norge",
+                  "_blank"
+                );
+              }}
+              sx={{
+                textDecoration: "none",
+                color: "inherit",
+                cursor: "pointer",
+                "&:hover": {
+                  backgroundColor: "rgba(74, 124, 89, 0.1)",
+                  borderRadius: 1,
+                },
+              }}
+            >
+              <ListItemIcon>
+                <LocationOn sx={{ color: "#4a7c59" }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={t.contact.emergency.hospital.primary}
+                secondary={t.contact.emergency.hospital.secondary}
+              />
+            </ListItem>
+          </List>
+        </Box>
+      </Box>
+    </Paper>
   );
 }
 
@@ -238,7 +374,7 @@ function ForHyttegjester() {
           }}
         >
           <Tab label={t.tabs.info} />
-          <Tab label={t.tabs.contact} />
+          <Tab label={t.tabs.hiking} />
           <Tab label={t.tabs.feedback} />
         </Tabs>
       </Box>
@@ -276,6 +412,33 @@ function ForHyttegjester() {
           >
             {t.welcome.description}
           </Typography>
+          <Box sx={{ textAlign: "center", marginTop: 2 }}>
+            <Button
+              component="a"
+              href="https://www.instagram.com/trulsrudkollen"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="outlined"
+              startIcon={<InstagramIcon />}
+              sx={{
+                color: "#7db88a",
+                borderColor: "#7db88a",
+                borderWidth: "2px",
+                padding: "12px 24px",
+                fontSize: "1.1rem",
+                fontWeight: 500,
+                borderRadius: 2,
+                textTransform: "none",
+                "&:hover": {
+                  backgroundColor: "#7db88a",
+                  color: "white",
+                  borderColor: "#7db88a",
+                },
+              }}
+            >
+              {t.welcome.instagram}
+            </Button>
+          </Box>
         </Paper>
 
         {/* Ankomst og bruk av hytta */}
@@ -668,11 +831,14 @@ function ForHyttegjester() {
             </Typography>
           </Box>
         </Paper>
+
+        {/* Kontaktinformasjon modul */}
+        <ContactInfo t={t} />
       </TabPanel>
 
-      {/* TabPanel for kontakt */}
+      {/* TabPanel for turguide */}
       <TabPanel value={activeTab} index={1}>
-        {/* Kontaktinformasjon */}
+        {/* Turguide */}
         <Paper
           elevation={3}
           sx={{
@@ -694,104 +860,106 @@ function ForHyttegjester() {
               gap: 1,
             }}
           >
-            <Phone sx={{ color: "#f59e0b" }} />
-            {t.contact.title}
+            <LocationOn sx={{ color: "#f59e0b" }} />
+            {t.hiking.title}
           </Typography>
 
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
-              gap: 3,
-            }}
-          >
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            {/* Eventyrsti til Trulsrudkollen */}
             <Box>
               <Typography
                 variant="h6"
                 sx={{ color: "#4a7c59", marginBottom: 2 }}
               >
-                {t.contact.duringStay.title}
+                {t.hiking.trails.trulsrudkollen.title}
               </Typography>
-              <List dense>
-                <ListItem
-                  component="a"
-                  href={`tel:${t.contact.duringStay.phone.primary.replace(
-                    "Telefon: ",
-                    ""
-                  )}`}
-                  sx={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    "&:hover": {
-                      backgroundColor: "rgba(74, 124, 89, 0.1)",
-                      borderRadius: 1,
-                    },
-                  }}
-                >
-                  <ListItemIcon>
-                    <Phone sx={{ color: "#4a7c59" }} />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={t.contact.duringStay.phone.primary}
-                    secondary={t.contact.duringStay.phone.secondary}
-                  />
-                </ListItem>
-                <ListItem
-                  component="a"
-                  href={`mailto:${t.contact.duringStay.email.primary.replace(
-                    "E-post: ",
-                    ""
-                  )}`}
-                  sx={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    "&:hover": {
-                      backgroundColor: "rgba(74, 124, 89, 0.1)",
-                      borderRadius: 1,
-                    },
-                  }}
-                >
-                  <ListItemIcon>
-                    <Email sx={{ color: "#4a7c59" }} />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={t.contact.duringStay.email.primary}
-                    secondary={t.contact.duringStay.email.secondary}
-                  />
-                </ListItem>
-              </List>
+              <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+                {t.hiking.trails.trulsrudkollen.description}
+              </Typography>
             </Box>
 
+            {/* Buss fra Gullhaug */}
             <Box>
               <Typography
                 variant="h6"
                 sx={{ color: "#4a7c59", marginBottom: 2 }}
               >
-                {t.contact.emergency.title}
+                {t.hiking.trails.gullhaug.title}
               </Typography>
-              <List dense>
-                <ListItem>
-                  <ListItemIcon>
-                    <Info sx={{ color: "#dc2626" }} />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={t.contact.emergency.emergency.primary}
-                    secondary={t.contact.emergency.emergency.secondary}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemIcon>
-                    <LocationOn sx={{ color: "#4a7c59" }} />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={t.contact.emergency.hospital.primary}
-                    secondary={t.contact.emergency.hospital.secondary}
-                  />
-                </ListItem>
-              </List>
+              <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+                {t.hiking.trails.gullhaug.description}
+              </Typography>
+            </Box>
+
+            {/* Solfjellsstua */}
+            <Box>
+              <Typography
+                variant="h6"
+                sx={{ color: "#4a7c59", marginBottom: 2 }}
+              >
+                {t.hiking.trails.solfjellsstua.title}
+              </Typography>
+              <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+                {t.hiking.trails.solfjellsstua.description}
+              </Typography>
+            </Box>
+
+            {/* Pannekaker på Bærums verk */}
+            <Box>
+              <Typography
+                variant="h6"
+                sx={{ color: "#4a7c59", marginBottom: 2 }}
+              >
+                {t.hiking.trails.baerumsverk.title}
+              </Typography>
+              <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+                {t.hiking.trails.baerumsverk.description}
+              </Typography>
+            </Box>
+
+            {/* Kolsåstopp */}
+            <Box>
+              <Typography
+                variant="h6"
+                sx={{ color: "#4a7c59", marginBottom: 2 }}
+              >
+                {t.hiking.trails.kolsastopp.title}
+              </Typography>
+              <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+                {t.hiking.trails.kolsastopp.description}
+              </Typography>
+            </Box>
+
+            {/* Kjaglidalen */}
+            <Box>
+              <Typography
+                variant="h6"
+                sx={{ color: "#4a7c59", marginBottom: 2 }}
+              >
+                {t.hiking.trails.kjaglidalen.title}
+              </Typography>
+              <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+                {t.hiking.trails.kjaglidalen.description}
+              </Typography>
+            </Box>
+
+            {/* Pilegrimsleden */}
+            <Box>
+              <Typography
+                variant="h6"
+                sx={{ color: "#4a7c59", marginBottom: 2 }}
+              >
+                {t.hiking.trails.pilgrim.title}
+              </Typography>
+              <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+                {t.hiking.trails.pilgrim.description}
+              </Typography>
             </Box>
           </Box>
         </Paper>
+
+        {/* Kontaktinformasjon modul */}
+        <ContactInfo t={t} />
       </TabPanel>
 
       {/* TabPanel for tilbakemelding */}
@@ -985,6 +1153,9 @@ function ForHyttegjester() {
             </Button>
           </Box>
         </Paper>
+
+        {/* Kontaktinformasjon modul */}
+        <ContactInfo t={t} />
       </TabPanel>
 
       {/* Snackbar for tilbakemelding */}

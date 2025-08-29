@@ -1,11 +1,10 @@
 import React from "react";
-import { AppBar, Toolbar, Box, Typography, Button } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useLocation, useNavigate } from "react-router-dom";
+import { AppBar, Toolbar, Box, Typography } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import { useLocation } from "react-router-dom";
 
 function Header() {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const handleHomeClick = () => {
     // Send custom event for å tilbakestille bildet til det første
@@ -20,18 +19,6 @@ function Header() {
         top: 0,
         behavior: "smooth",
       });
-    }
-  };
-
-  const handleCabinGuestClick = () => {
-    // Sjekk om brukeren allerede har riktig passord
-    const savedPassword = localStorage.getItem("hyttegjester_password");
-    if (savedPassword === "3579") {
-      // Brukeren har allerede riktig passord, naviger direkte
-      navigate("/for-hyttegjester");
-    } else {
-      // Brukeren må skrive inn passord, naviger til passordskjermen
-      navigate("/for-hyttegjester");
     }
   };
 
@@ -71,7 +58,7 @@ function Header() {
           }}
           onClick={handleHomeClick}
         >
-          <FavoriteIcon
+          <HomeIcon
             sx={{
               color: "#f59e0b",
               fontSize: "2rem",
@@ -105,28 +92,6 @@ function Header() {
           </Typography>
         </Box>
         <Box sx={{ flexGrow: 1 }} />
-
-        {/* Lenke til "For hyttegjester" */}
-        <Button
-          onClick={handleCabinGuestClick}
-          variant="text"
-          sx={{
-            color: "#ffffff",
-            fontWeight: 600,
-            fontSize: { xs: "0.9rem", sm: "1rem" },
-            textTransform: "none",
-            padding: "8px 16px",
-            borderRadius: "12px",
-            transition: "all 0.3s ease",
-            "&:hover": {
-              background: "rgba(255, 255, 255, 0.1)",
-              transform: "scale(1.05)",
-              color: "#f8fafc",
-            },
-          }}
-        >
-          For hyttegjester
-        </Button>
       </Toolbar>
     </AppBar>
   );

@@ -53,7 +53,7 @@ export const translations = {
       fridge: {
         title: "Kjøleskap på gass",
         description:
-          "Drikkevarer kan også settes under kjellerlem i stuegulvet – merk at kjellerrom ikke er musesikkert.",
+          "Det finnes detaljert instruks for å skru på kjøleskapet i hytteinformasjonen som kan lastes ned ovenfor. Drikkevarer kan også settes under kjellerlem i stuegulvet – merk at kjellerrom ikke er musesikkert.",
       },
       stove: {
         title: "Koketopp",
@@ -263,7 +263,7 @@ export const translations = {
       fridge: {
         title: "Gas Fridge",
         description:
-          "Drinks can also be placed under the cellar hatch in the living room floor – note that the cellar room is not mouse-proof.",
+          "There are detailed instructions for turning on the fridge in the cabin information that can be downloaded above. Drinks can also be placed under the cellar hatch in the living room floor – note that the cellar room is not mouse-proof.",
       },
       stove: {
         title: "Stove",

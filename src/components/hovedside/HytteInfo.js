@@ -859,6 +859,28 @@ function HytteInfo() {
         </Typography>
       </Box>
 
+      {/* Utstyr-seksjon */}
+      <Box className="glass-card" sx={{ padding: "32px", margin: "32px 0" }}>
+        <Typography
+          variant="h5"
+          className="modern-title"
+          sx={{
+            mb: 3,
+            textAlign: "center",
+            fontSize: "1.8rem",
+          }}
+        >
+          Utstyr
+        </Typography>
+        <Typography
+          variant="body1"
+          paragraph
+          sx={{ lineHeight: 1.8, fontSize: "1.1rem" }}
+        >
+          {hytte["utstyr"]}
+        </Typography>
+      </Box>
+
       {/* Vann-seksjon */}
       <Box className="glass-card" sx={{ padding: "32px", margin: "32px 0" }}>
         <Typography
